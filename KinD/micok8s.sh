@@ -9,12 +9,21 @@ mv ./kind /pathDir/kind
 
 kind create cluster --name=kind --config=kind.yml
 
-
+kind delete cluster --name=kind
 kind create cluster
-sudo snap install microk8s --classic
-microk8s.enable dashboard dns
-microk8s.kubectl get all --all-namespaces
-token=$(microk8s.kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
-microk8s.kubectl -n kube-system describe secret $token
-microk8s.kubectl cluster-info
-microk8s.config
+
+# Dashboard prometheus
+# kubectl --namespace monitoring port-forward svc/prometheus-k8s 9090
+# Grafana
+# kubectl --namespace monitoring port-forward svc/grafana 3000
+# kubectl --namespace test port-forward svc/hello 30000
+
+./apache-jmeter-5.2.1/bin/jmeter -n -t 'Thread Group.jmx' -l 5PodK8s.txt
+
+./apache-jmeter-5.2.1/bin/jmeter -g <log file> -o <Path to output folder>
+
+kubectl autoscale deployment hello --cpu-percent=50 --min=1 --max=10 -n test
+kubectl autoscale deployment world --cpu-percent=50 --min=1 --max=10 -n test
+kubectl autoscale deployment world2 --cpu-percent=50 --min=1 --max=10 -n test
+ kubectl run --generator=run-pod/v1 -it --rm load-generator --image=busybox /bin/sh
+ while true; do wget -q -O- http://hello.test.svc.cluster.local:30000; done

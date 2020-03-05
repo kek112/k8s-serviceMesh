@@ -1,7 +1,8 @@
 kind create cluster --name=kind --config=../KinD/kind.yml
 istioctl manifest apply --set profile=demo
 kubectl wait --for=condition=Ready pods --all -n istio-system --timeout=500s
-
+cd deployment
+./depl.sh
 #  istioctl kube-inject -f deployment/deployment.yml | kubectl apply -f -
 #  istioctl dashboard kiali
 #  istioctl dashboard prometheus

@@ -7,6 +7,9 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def returnText():
+    os.environ["NEXT"] = "http://localhost:30000"
+    os.environ["TEXT"] = "world"
+
     if 'HOME' not in os.environ:
         return 'Please specify env TEXT'
     else:
@@ -14,7 +17,7 @@ def returnText():
             return os.environ['TEXT']
         else:
             r = requests.get(os.environ['NEXT'])
-            return os.environ['NEXT'] + r
+            return os.environ['TEXT'] + ' ' + r.text
 
 @app.route('/health', methods=['GET'])
 def health():

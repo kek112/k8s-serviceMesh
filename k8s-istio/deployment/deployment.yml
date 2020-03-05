@@ -48,24 +48,6 @@ spec:
   selector:
     app: hello
 ---
-#apiVersion: autoscaling/v2beta1
-#kind: HorizontalPodAutoscaler
-#metadata:
-#  name: hello
-#  namespace: test
-#spec:
-#  scaleTargetRef:
-#    apiVersion: apps/v1
-#    kind: Deployment
-#    name: hello
-#  minReplicas: 1
-#  maxReplicas: 15
-#  metrics:
-#    - type: Resource
-#      resource:
-#        name: cpu
-#        targetAverageUtilization: 50
-#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -106,24 +88,6 @@ spec:
   selector:
     app: world
 ---
-#apiVersion: autoscaling/v2beta1
-#kind: HorizontalPodAutoscaler
-#metadata:
-#  name: world
-#  namespace: test
-#spec:
-#  scaleTargetRef:
-#    apiVersion: apps/v1
-#    kind: Deployment
-#    name: world
-#  minReplicas: 1
-#  maxReplicas: 15
-#  metrics:
-#    - type: Resource
-#      resource:
-#        name: cpu
-#        targetAverageUtilization: 50
-#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -162,21 +126,3 @@ spec:
   selector:
     app: world2
 ---
-#apiVersion: autoscaling/v2beta1
-#kind: HorizontalPodAutoscaler
-#metadata:
-#  name: world2
-#  namespace: test
-#spec:
-#  scaleTargetRef:
-#    apiVersion: apps/v1
-#    kind: Deployment
-#    name: world2
-#  minReplicas: 1
-#  maxReplicas: 15
-#  metrics:
-#    - type: Resource
-#      resource:
-#        name: cpu
-#        targetAverageUtilization: 50
-#---

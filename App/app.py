@@ -9,8 +9,10 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def returnText():
     # fail 20% of the requests
-    if random.randint(0,100) < 20:
-        abort(404)
+
+    if 'FAIL' in os.environ:
+        if random.randint(0,100) < 20:
+            abort(404)
     # if text env is not set return phrase
     if 'TEXT' not in os.environ:
         return 'Please specify env TEXT'

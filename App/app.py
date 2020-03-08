@@ -7,10 +7,8 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def returnText():
-    os.environ["NEXT"] = "http://localhost:30000"
-    os.environ["TEXT"] = "world"
 
-    if 'HOME' not in os.environ:
+    if 'TEXT' not in os.environ:
         return 'Please specify env TEXT'
     else:
         if 'NEXT' not in os.environ:

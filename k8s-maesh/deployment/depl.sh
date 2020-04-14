@@ -1,3 +1,2 @@
 kubectl apply -f ./
-kubectl wait --for=condition=Ready pods --all -n test
-kubectl --namespace test port-forward svc/hello 30000
+kubectl wait --for=condition=Ready pods --all -n test --timeout=500s

@@ -17,7 +17,7 @@ spec:
   selector:
     matchLabels:
       app: hello
-  replicas: 15
+  replicas: 3
   template:
     metadata:
       labels:
@@ -27,6 +27,8 @@ spec:
         - name: hello
           image: kek112/flaskapp
           env:
+            - name: FAIL
+              value: "true"
             - name: TEXT
               value: hello
             - name: NEXT
@@ -55,10 +57,26 @@ metadata:
     app: hello
 spec:
   ports:
-    - port: 30000
+    - name: web
+      port: 30000
       targetPort: 5000
   selector:
     app: hello
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: flaskapphello
+  namespace: test
+spec:
+  rules:
+    - host: flask.app
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: hello
+              servicePort: 30000
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -69,7 +87,7 @@ spec:
   selector:
     matchLabels:
       app: world
-  replicas: 15
+  replicas: 3
   template:
     metadata:
       labels:
@@ -87,7 +105,7 @@ spec:
             - containerPort: 5000
           livenessProbe:
             httpGet:
-              path: /health
+              path: /healthkubectl get service hostnames -o json
               port: 5000
             initialDelaySeconds: 10
             periodSeconds: 30
@@ -121,7 +139,7 @@ spec:
   selector:
     matchLabels:
       app: world2
-  replicas: 15
+  replicas: 3
   template:
     metadata:
       labels:

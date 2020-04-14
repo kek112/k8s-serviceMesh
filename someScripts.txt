@@ -18,6 +18,8 @@ kind create cluster
 # kubectl --namespace monitoring port-forward svc/grafana 3000
 # kubectl --namespace test port-forward svc/hello 30000
 
+kubectl delete pod node-exporter-m9nlr  --grace-period=0 --force --namespace monitoring
+
 ./apache-jmeter-5.2.1/bin/jmeter -n -t 'Thread Group.jmx' -l target.txt
 
 ./apache-jmeter-5.2.1/bin/jmeter -g <log file> -o <Path to output folder>
@@ -25,3 +27,20 @@ kind create cluster
 
  kubectl run --generator=run-pod/v1 -it --rm load-generator --image=busybox /bin/sh
  while true; do wget -q -O- http://hello.test.svc.cluster.local:30000; done
+ wget -q -O- http://world2.test.maesh:30002
+curl world2.test.maesh:30002
+
+docker run -p 30000:5000 kek112/flask
+
+
+az aks get-credentials --resource-group Kubernetes --name KubernetesTest
+
+# install traefik
+kubectl apply -f https://raw.githubusercontent.com/containous/traefik/v1.7/examples/k8s/traefik-rbac.yaml
+kubectl apply -f https://raw.githubusercontent.com/containous/traefik/v1.7/examples/k8s/traefik-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/containous/traefik/v1.7/examples/k8s/ui.yaml
+
+kubectl describe svc traefik-ingress-service -n kube-system
+
+
+

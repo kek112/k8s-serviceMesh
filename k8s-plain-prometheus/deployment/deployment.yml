@@ -105,7 +105,7 @@ spec:
             - containerPort: 5000
           livenessProbe:
             httpGet:
-              path: /healthkubectl get service hostnames -o json
+              path: /health
               port: 5000
             initialDelaySeconds: 10
             periodSeconds: 30

@@ -25,9 +25,11 @@ kubectl delete pod node-exporter-m9nlr  --grace-period=0 --force --namespace mon
 ./apache-jmeter-5.2.1/bin/jmeter -g <log file> -o <Path to output folder>
 
 
- kubectl run --generator=run-pod/v1 -it --rm load-generator --image=busybox /bin/sh
+ kubectl run --generator=run-pod/v1 -it --rm load-generator --image=ubuntu /bin/bash
  while true; do wget -q -O- http://hello.test.svc.cluster.local:30000; done
- wget -q -O- http://world2.test.maesh:30002
+wget -q -O- http://world2.test.svc.cluster.local:30002
+curl http://world2.test.svc.cluster.local:30002
+wget -q -O- http://world2.test.maesh:30002
 curl world2.test.maesh:30002
 
 docker run -p 30000:5000 kek112/flask

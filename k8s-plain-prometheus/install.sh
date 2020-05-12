@@ -1,10 +1,10 @@
-#kind create cluster --name=kind --config=../KinD/kind.yml
-kubectl create -f kube-prometheus-master/manifests/setup
-until kubectl get servicemonitors --all-namespaces ; do date; sleep 1; echo ""; done
-kubectl create -f kube-prometheus-master/manifests/
-kubectl wait --for=condition=Ready pods --all -n monitoring --timeout=500s
-#install metalLB
-#install traefik
+kubectl create ns monitoring
+helm install metrics -n monitoring stable/prometheus-operator --set alertmanager.enabled=false
 
-cd deployment
+# install LoadBalancer, Ingress Controller and deployment
+cd deployment || exit
 ./depl.sh
+cd ../../metalLB/ || exit
+./install.sh
+cd ../traefik || exit
+./install.sh

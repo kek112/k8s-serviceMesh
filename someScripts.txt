@@ -7,7 +7,7 @@ read pathDir
 
 mv ./kind /pathDir/kind
 
-kind create cluster --name=kind --config=kind.yml
+kind create cluster --name=kind --config=KinD/kind.yml
 
 kind delete cluster --name=kind
 kind create cluster
@@ -20,9 +20,9 @@ kind create cluster
 
 kubectl delete pod node-exporter-m9nlr  --grace-period=0 --force --namespace monitoring
 
-./apache-jmeter-5.2.1/bin/jmeter -n -t 'Thread Group.jmx' -l target.txt
+jmeter -n -t 'Thread Group.jmx' -l target.txt
 
-./apache-jmeter-5.2.1/bin/jmeter -g <log file> -o <Path to output folder>
+jmeter -g <log file> -o <Path to output folder>
 
 
  kubectl run --generator=run-pod/v1 -it --rm load-generator --image=ubuntu /bin/bash

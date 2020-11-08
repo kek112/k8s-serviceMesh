@@ -45,7 +45,10 @@ It will install:
 
 Side Note: if you're running this in a cloud environment you won't need metalLB, so just remove the line
 
-##Istio
-To 
-##Linkerd
-##Maesh
+###Steps
++ have KinD running with the [kind.yml](./KinD/kind.yml) as parameter (Or connect to an Cloud Kubernetes Cluster)
+`kind create cluster --name=kind --config=KinD/kind.yml`
++ Start the installation of the environment through the install.sh of the folder 
++ after that you can start the application with the depl.sh 
++ modify the hosts file to access the correct ip address when testing see deployment.yaml (host: flask.app) and change the host to what you want
+my hosts entry looks like this:  20.50.148.148 flask.app
